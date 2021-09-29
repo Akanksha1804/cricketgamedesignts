@@ -97,10 +97,16 @@ var table = /** @class */ (function () {
 new table().create("tb1");
 var windiv = document.createElement("div");
 windiv.setAttribute("class", "col-lg-2");
+var genres = document.createElement("button");
+genres.setAttribute("onclick", "funresult()");
+genres.innerHTML = "GENERATE RESULT";
+genres.style.backgroundColor = "blue";
+genres.style.color = "white";
 var winp1 = document.createElement("p");
 winp1.innerHTML = "MATCH WON BY";
 var winp2 = document.createElement("p");
 winp2.innerHTML = "MAN OF THE MATCH";
+windiv.appendChild(genres);
 windiv.appendChild(winp1);
 windiv.appendChild(winp2);
 main.appendChild(windiv);
@@ -140,7 +146,7 @@ var downloadTimer = setInterval(function () {
 function repeatTimer() {
     var timeleft = 60;
     var downloadTimer = setInterval(function () {
-        if (timeleft <= 0) {
+        if (timeleft <= 0 || document.getElementById("btn2")["disabled"] == "true") {
             document.getElementById("btn2").setAttribute("disabled", "true");
             clearInterval(downloadTimer);
         }
@@ -165,6 +171,7 @@ function table_one() {
     var sc = getRandomInt();
     tb1sum = tb1sum + sc;
     r1sum = r1sum + sc;
+    document.getElementById("sc1").innerHTML = tb1sum.toString();
     document.getElementById("tb1_" + r.toString() + c.toString()).innerHTML = sc.toString();
     document.getElementById("tb1_" + r.toString() + "7").innerHTML = r1sum.toString();
     if (sc == 0 || c == 6) {
@@ -184,11 +191,14 @@ var rs = 1, cs = 1, tb2sum = 0, r2sum = 0, max2sum = 0, r2id = 0;
 function table_two() {
     if (rs == 11) {
         document.getElementById("btn2").setAttribute("disabled", "true");
-        funresult();
+        console.log(document.getElementById("btn2")["disabled"]);
+        clearInterval(downloadTimer);
+        return;
     }
     var sc = getRandomInt();
     tb2sum = tb2sum + sc;
     r2sum = r2sum + sc;
+    document.getElementById("sc2").innerHTML = tb2sum.toString();
     document.getElementById("tb2_" + rs.toString() + cs.toString()).innerHTML = sc.toString();
     document.getElementById("tb2_" + rs.toString() + "7").innerHTML = r2sum.toString();
     if (sc == 0 || cs == 6) {
